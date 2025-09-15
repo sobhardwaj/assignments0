@@ -18,6 +18,7 @@ A comprehensive backend service for simulating recurring donations for nonprofit
 - [] register doner and validation of it.
 - [] jwt token authurization for security
 - [] notification after sucessful subscrtions or failure reason receipt for doner.
+- [] LLM description response from real LLM api key.
 
 ## Quick Start
 
