@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://subscription_user:subscription_password@postgres:5432/subscription_billing?sslmode=disable
+      - PORT=3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - subscription-network
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=subscription_billing
+      - POSTGRES_USER=subscription_user
+      - POSTGRES_PASSWORD=subscription_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test:
+        ["CMD-SHELL", "pg_isready -U subscription_user -d subscription_billing"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - subscription-network
+
+volumes:
+  postgres_data:
+
+networks:
+  subscription-network:
+    driver: bridge
