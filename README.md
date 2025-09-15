@@ -13,6 +13,12 @@ A comprehensive backend service for simulating recurring donations for nonprofit
 - ✅ TypeScript for type safety
 - ✅ Background job scheduling
 
+## Features need to implements can be add more advance
+- [] Caching
+- [] register doner and validation of it.
+- [] jwt token authurization for security
+- [] notification after sucessful subscrtions or failure reason receipt for doner.
+
 ## Quick Start
 
 ### Development (without Docker)
